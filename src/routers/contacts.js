@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { ctrlWrapper } from "../utils/CtrlWrapper";
-import { getContactsController, getContactByIdController, createContactController, patchContactController } from "../controllers/contacts";
+import { ctrlWrapper } from "../utils/CtrlWrapper.js";
+import { getContactsController, getContactByIdController, createContactController, patchContactController } from "../controllers/contacts.js";
 const router = Router();
 
 
