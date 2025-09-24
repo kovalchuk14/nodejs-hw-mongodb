@@ -8,7 +8,7 @@
     "dev": "nodemon src/index.js"
   },
   "repository": {
-    "type": "git",
+    "type": "module",
     "url": "git+https://github.com/kovalchuk14/nodejs-hw-mongodb.git"
   },
   "keywords": [],
