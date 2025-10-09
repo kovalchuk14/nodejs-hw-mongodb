@@ -1,9 +1,13 @@
 import { setupServer } from "./server.js";
 import { initMongoConnection } from "./db/initMongoConnection.js";
 
-async function bootstrap() {
+import { TEMP_UPLOAD_DIR, UPLOAD_DIR } from "./constans/index.js";
+import { createDirIfNotExists } from "./utils/CreateDirIfNotExists.js";
 
+async function bootstrap() {
     await initMongoConnection();
+    await createDirIfNotExists(TEMP_UPLOAD_DIR);
+    await createDirIfNotExists(UPLOAD_DIR);
     setupServer();
 }
 

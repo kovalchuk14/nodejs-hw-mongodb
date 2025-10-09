@@ -7,6 +7,7 @@ import { getEnvVar } from "./utils/getEnvVar.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { notFoundHandler } from "./middlewares/notFoundHandler.js";
 import cookieParser from "cookie-parser";
+import { UPLOAD_DIR } from "./constans/index.js";
 
 
 dotenv.config();
@@ -31,6 +32,7 @@ export function setupServer() {
     }),
   );
 
+  app.use('/uploads', express.static(UPLOAD_DIR));
 
   app.use(router);
 
