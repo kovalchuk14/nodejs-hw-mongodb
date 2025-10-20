@@ -1,0 +1,75 @@
+# swagger/paths/contacts/post.yaml
+tags:
+  - Contacts
+summary: Create contact
+operationId: createContact
+description: Create contact
+security:
+  - bearerAuth: []
+
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - name
+          - phoneNumber
+          - contactType
+          - userId
+        properties:
+          name:
+            type: string
+            description: Contact name
+            example: John Dou
+          phoneNumber:
+            type: string
+            description: Contact phone number
+            example: +380000000007
+          email:
+            type: string
+            description: Contact email
+            example: example@gmail.com
+          isFavourite:
+            type: boolean
+            description: info is a contact marked as a favorited
+            default: false
+            example: true
+          contactType:
+            type: string
+            description: Contact type
+            enum: ['work', 'home', 'personal']
+            default: personal
+            example: personal
+          userId:
+            type: string
+            description: Contact owner id
+            example: 65ca67e7ae7f10c88b598384
+
+responses:
+  '201':
+    description: Successfully created a contact!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created a contact!
+            data:
+              type: object
+              $ref: ../../components/schemas/contact.yaml
+  '400':
+    $ref: ../../components/responses/400.yaml
+  '401':
+    $ref: ../../components/responses/401.yaml
+  '500':
+    $ref: ../../components/responses/500.yaml

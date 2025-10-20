@@ -1,0 +1,82 @@
+# swagger/paths/contacts/get.yaml
+tags:
+  - Contacts
+summary: Get some contacts
+operationId: getContacts
+description: Get some contacts
+security:
+  - bearerAuth: []
+
+parameters:
+  - name: page
+    in: query
+    schema:
+      type: integer
+      example: 1
+  - name: perPage
+    in: query
+    schema:
+      type: integer
+      example: 5
+  - name: sortBy
+    in: query
+    schema:
+      type: string
+      enum:
+        [
+          '_id',
+          'name',
+          'phoneNumber',
+          'email',
+          'isFavourite',
+          'contactType',
+          'createdAt',
+          'updatedAt',
+        ]
+      example: name
+  - name: sortOrder
+    in: query
+    schema:
+      type: string
+      enum: ['asc', 'dsc']
+      default: 'asc'
+      example: desc
+  - name: contactType
+    in: query
+    schema:
+      type: string
+      enum: ['work', 'home', 'personal']
+      example: home
+  - name: isFavourite
+    in: query
+    schema:
+      type: boolean
+      example: true
+
+responses:
+  '201':
+    description: Successfully created a contact!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created a contact!
+            data:
+              type: object
+              $ref: ../../components/schemas/contact.yaml
+  '400':
+    $ref: ../../components/responses/400.yaml
+  '401':
+    $ref: ../../components/responses/401.yaml
+  '500':
+    $ref: ../../components/responses/500.yaml

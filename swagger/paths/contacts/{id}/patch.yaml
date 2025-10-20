@@ -1,0 +1,91 @@
+# swagger/paths/contacts/{id}/patch.yaml
+tags:
+  - Contacts
+summary: Update contact
+operationId: updateContact
+description: Update contact by id
+security:
+  - bearerAuth: []
+
+parameters:
+  - name: id
+    in: path
+    required: true
+    description: Contact id
+    schema:
+      type: string
+      example: 65ca67e7ae7f10c88b598384
+
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+            description: Contact name
+            example: John Dou
+          phoneNumber:
+            type: string
+            description: Contact phone number
+            example: +380000000007
+          email:
+            type: string
+            description: Contact email
+            example: example@gmail.com
+          isFavourite:
+            type: boolean
+            description: info is a contact marked as a favorited
+            default: false
+            example: true
+          contactType:
+            type: string
+            description: Contact type
+            enum: ['work', 'home', 'personal']
+            default: personal
+            example: personal
+
+responses:
+  '200':
+    description: Successfully patched a contact!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully patched a contact!
+            data:
+              type: object
+              $ref: ../../../components/schemas/contact.yaml
+  '400':
+    $ref: ../../../components/responses/400.yaml
+  '401':
+    $ref: ../../../components/responses/401.yaml
+  '404':
+    description: Contact not found
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: Contact not found
+  '500':
+    $ref: ../../../components/responses/500.yaml

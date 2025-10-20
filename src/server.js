@@ -8,9 +8,13 @@ import { errorHandler } from "./middlewares/errorHandler.js";
 import { notFoundHandler } from "./middlewares/notFoundHandler.js";
 import cookieParser from "cookie-parser";
 import { UPLOAD_DIR } from "./constans/index.js";
-
+import swaggerUI from "swagger-ui-express";
+import * as fs from "node:fs";
+import path from "node:path";
 
 dotenv.config();
+
+const SWAGGER_DOCUMENT = JSON.parse(fs.readFileSync(path.join('docs', "swagger.json")));
 
 export function setupServer() {
   const app = express();
@@ -22,6 +26,7 @@ export function setupServer() {
   }),);
 
   app.use(cors());
+  app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCUMENT));
   app.use(cookieParser());
 
   app.use(
