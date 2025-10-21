@@ -45,6 +45,11 @@ requestBody:
             enum: ['work', 'home', 'personal']
             default: personal
             example: personal
+          photo:
+            type: string
+            format: binary
+            description: Contact avatar photo
+            example: https://res.cloudinary.com/...
 
 responses:
   '200':

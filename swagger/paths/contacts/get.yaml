@@ -54,8 +54,8 @@ parameters:
       example: true
 
 responses:
-  '201':
-    description: Successfully created a contact!
+  '200':
+    description: Successfully found contacts!
     content:
       application/json:
         schema:
@@ -64,16 +64,42 @@ responses:
             - status
             - message
             - data
+            - page
+            - perPage
+            - totalItems
+            - totalPages
+            - hasNextPage
+            - hasPreviousPage
           properties:
             status:
               type: integer
-              example: 201
+              example: 200
             message:
               type: string
-              example: Successfully created a contact!
+              example: Successfully found contacts!
             data:
-              type: object
-              $ref: ../../components/schemas/contact.yaml
+              type: array
+              items:
+                $ref: ../../components/schemas/contact.yaml
+            page:
+              type: number
+              example: 1
+            perPage:
+              type: number
+              example: 4
+            totalItems:
+              type: number
+              example: 4
+            totalPages:
+              type: number
+              example: 4
+            hasNextPage:
+              type: boolean
+              example: true
+            hasPreviousPage:
+              type: boolean
+              example: false
+
   '400':
     $ref: ../../components/responses/400.yaml
   '401':

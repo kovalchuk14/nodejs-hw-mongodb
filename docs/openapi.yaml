@@ -14,7 +14,7 @@ tags:
   # теги, що ви будете використовувати
 servers:
   - url: http://localhost:3000
-  #- url: #посилання на задеплоєний сайт
+  - url: https://contactsapp-bvwc.onrender.com
 paths:
   /contacts/{id}:
     get:
