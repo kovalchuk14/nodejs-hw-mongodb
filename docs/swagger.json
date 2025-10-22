@@ -12,6 +12,9 @@
   "servers": [
     {
       "url": "http://localhost:3000"
+    },
+    {
+      "url": "https://contactsapp-bvwc.onrender.com"
     }
   ],
   "tags": [
@@ -172,6 +175,12 @@
                     ],
                     "default": "personal",
                     "example": "personal"
+                  },
+                  "photo": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Contact avatar photo",
+                    "example": "https://res.cloudinary.com/..."
                   }
                 }
               }
@@ -268,23 +277,7 @@
         ],
         "responses": {
           "204": {
-            "description": "Successfully delete contact by id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 204
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Successfully delete contact by id"
           },
           "401": {
             "$ref": "#/components/responses/401"
@@ -340,8 +333,7 @@
                 "required": [
                   "name",
                   "phoneNumber",
-                  "contactType",
-                  "userId"
+                  "contactType"
                 ],
                 "properties": {
                   "name": {
@@ -374,12 +366,13 @@
                       "personal"
                     ],
                     "default": "personal",
-                    "example": "personal"
+                    "example": "work"
                   },
-                  "userId": {
+                  "photo": {
                     "type": "string",
-                    "description": "Contact owner id",
-                    "example": "65ca67e7ae7f10c88b598384"
+                    "format": "binary",
+                    "description": "Contact avatar photo",
+                    "example": "https://res.cloudinary.com/..."
                   }
                 }
               }
@@ -510,8 +503,8 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Successfully created a contact!",
+          "200": {
+            "description": "Successfully found contacts!",
             "content": {
               "application/json": {
                 "schema": {
@@ -519,20 +512,52 @@
                   "required": [
                     "status",
                     "message",
-                    "data"
+                    "data",
+                    "page",
+                    "perPage",
+                    "totalItems",
+                    "totalPages",
+                    "hasNextPage",
+                    "hasPreviousPage"
                   ],
                   "properties": {
                     "status": {
                       "type": "integer",
-                      "example": 201
+                      "example": 200
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully created a contact!"
+                      "example": "Successfully found contacts!"
                     },
                     "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/contact"
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/contact"
+                      }
+                    },
+                    "page": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "perPage": {
+                      "type": "number",
+                      "example": 4
+                    },
+                    "totalItems": {
+                      "type": "number",
+                      "example": 4
+                    },
+                    "totalPages": {
+                      "type": "number",
+                      "example": 4
+                    },
+                    "hasNextPage": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "hasPreviousPage": {
+                      "type": "boolean",
+                      "example": false
                     }
                   }
                 }
