@@ -1,0 +1,28 @@
+type: object
+required:
+  - name
+  - email
+  - password
+  - createdAt
+  - updatedAt
+properties:
+  name:
+    type: string
+    description: User name
+    example: John Dou
+  email:
+    type: string
+    description: User email
+    example: example@gmail.com
+  password:
+    type: string
+    description: User password
+    example: '********'
+  createdAt:
+    type: string
+    format: data-time
+    example: 2024-05-08T16:12:14.954173
+  updatedAt:
+    type: string
+    format: data-time
+    example: 2024-05-08T16:12:14.954173

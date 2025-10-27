@@ -1,0 +1,29 @@
+# swagger/paths/auth/logout/post.yaml
+tags:
+  - Auth
+summary: Logout user
+operationId: LogoutAuth
+description: Logout user
+security:
+  - bearerAuth: []
+parameters:
+  - in: cookie
+    name: sessionId
+    schema:
+      type: string
+    required: false
+    description: Session ID stored in cookies.
+  - in: cookie
+    name: refreshToken
+    schema:
+      type: string
+    required: false
+    description: Refresh token stored in cookies.
+
+responses:
+  '204':
+    description: Successfully logged in an user!
+  '400':
+    $ref: ../../../components/responses/400.yaml
+  '500':
+    $ref: ../../../components/responses/500.yaml

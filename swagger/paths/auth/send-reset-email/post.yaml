@@ -1,0 +1,39 @@
+# swagger/paths/auth/send-reset-email/post.yaml
+tags:
+  - Auth
+summary: Request password reset email
+operationId: requestResetEmail
+description: Sends a reset password email to the user.
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+        properties:
+          email:
+            type: string
+            format: email
+            example: johndoe@example.com
+responses:
+  '200':
+    description: Reset password email sent successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Reset password email has been successfully sent.
+            data:
+              type: object
+  '500':
+    $ref: ../../../components/responses/500.yaml

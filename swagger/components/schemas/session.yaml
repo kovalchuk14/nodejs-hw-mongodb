@@ -1,0 +1,54 @@
+type: object
+required:
+  - _id
+  - userId
+  - accessToken
+  - refreshToken
+  - accessTokenValidUntil
+  - refreshTokenValidUntil
+  - createdAt
+  - updatedAt
+properties:
+  _id:
+    type: string
+    description: Session id
+    example: 68e5759deb0a7653b7151792
+  userId:
+    type: string
+    description: Session user id
+    example: 68e56ee81d5e513eb335c0c2
+  accessToken:
+    type: string
+    description: Session access token
+    example: +380000000007
+  email:
+    type: string
+    description: Contact email
+    example: example@gmail.com
+  isFavourite:
+    type: boolean
+    description: info is a contact marked as a favorited
+    default: false
+    example: true
+  contactType:
+    type: string
+    description: Contact type
+    enum: ['work', 'home', 'personal']
+    default: personal
+    example: personal
+  userId:
+    type: string
+    description: Contact owner id
+    example: 65ca67e7ae7f10c88b598384
+  photo:
+    type: string
+    description: Contact avatar
+    example: https://res.cloudinary.com/...
+  createdAt:
+    type: string
+    format: data-time
+    example: 2024-05-08T16:12:14.954173
+  updatedAt:
+    type: string
+    format: data-time
+    example: 2024-05-08T16:12:14.954173

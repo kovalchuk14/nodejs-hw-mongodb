@@ -2,17 +2,32 @@ import express from "express";
 import cors from "cors";
 import pino from "pino-http";
 import dotenv from "dotenv";
+import router from "./routers/index.js"
 import { getEnvVar } from "./utils/getEnvVar.js";
-import { getAllContacts, getContact } from "./services/contacts.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
+import { notFoundHandler } from "./middlewares/notFoundHandler.js";
+import cookieParser from "cookie-parser";
+import { UPLOAD_DIR } from "./constans/index.js";
+import swaggerUI from "swagger-ui-express";
+import * as fs from "node:fs";
+import path from "node:path";
 
 dotenv.config();
+
+const SWAGGER_DOCUMENT = JSON.parse(fs.readFileSync(path.join('docs', "swagger.json")));
 
 export function setupServer() {
   const app = express();
   const PORT = getEnvVar('PORT', 3000);
 
-  app.use(express.json());;
+  app.use(express.json({
+    type: ['application/json', 'application/vnd.api+json'],
+    limit: '100kb',
+  }),);
+
   app.use(cors());
+  app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCUMENT));
+  app.use(cookieParser());
 
   app.use(
     pino({
@@ -22,42 +37,13 @@ export function setupServer() {
     }),
   );
 
-  app.get('/contacts', async (req, res) => {
-    const contacts = await getAllContacts();
-    res.status(200).json({
-      status:200,
-      message: "Successfully found contacts!",
-      data: contacts,
-    });
-  });
+  app.use('/uploads', express.static(UPLOAD_DIR));
 
-  app.get('/contacts/:contactId', async (req, res) => {
-    const { contactId } = req.params;
-    const contact = await getContact(contactId);
+  app.use(router);
 
-    if (!contact) {
-      res.status(404).json({
-        message: 'Contact not found',
-      });
-      return;
-    }
-    res.status(200).json({
-      status:200,
-      message: `Successfully found contact with id ${contactId}!`,
-      data: contact,
-    });
-  });
+  app.use(notFoundHandler);
 
-
-  app.use((req, res) => {
-    res.status(404).json({
-      message: "not found",
-    });
-  });
-  app.use((err, req, res) => {
-  console.error(err.stack);
-  res.status(500).json({ message: "Internal Server Error" });
-});
+  app.use(errorHandler);
 
 
   app.listen(PORT, () => {
