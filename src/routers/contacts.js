@@ -15,12 +15,14 @@ router.get('/', ctrlWrapper(getContactsController));
 
 router.get('/:contactId', IsVaildId, ctrlWrapper(getContactByIdController));
 
-router.post('/', validateBody(createContactSchema),
+router.post('/',
     upload.single('photo'),
+    validateBody(createContactSchema),
     ctrlWrapper(createContactController));
 
-router.patch('/:contactId', IsVaildId, validateBody(updateContactSchema),
+router.patch('/:contactId', IsVaildId,
     upload.single('photo'),
+    validateBody(updateContactSchema),
     ctrlWrapper(patchContactController));
 
 router.delete('/:contactId',IsVaildId, ctrlWrapper(deleteContactController));
